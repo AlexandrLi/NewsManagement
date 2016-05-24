@@ -5,12 +5,12 @@ import com.epam.ali.testapp.model.News;
 import java.util.List;
 
 public interface INewsDAO {
-    List<News> getList();
+    List<News> getList() throws DaoException;
 
     void save();
 
-    void remove();
+    void remove(Integer id) throws DaoException;
 
-    void fetchById(Integer id);
+    News fetchById(Integer id) throws DaoException;
 
 }

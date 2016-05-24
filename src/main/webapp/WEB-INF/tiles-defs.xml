@@ -1,0 +1,26 @@
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 1.3//EN"
+        "http://struts.apache.org/dtds/tiles-config_1_3.dtd">
+
+<tiles-definitions>
+    <definition name="common-template" template="/pages/tiles/common-layout.jsp">
+        <put name="header" value="/pages/tiles/header.jsp"/>
+        <put name="menu" value="/pages/tiles/menu.jsp"/>
+        <put name="footer" value="/pages/tiles/footer.jsp"/>
+    </definition>
+
+    <definition name="edit-news" extends="common-template">
+        <put name="title" value="Add news"/>
+        <put name="body" value="/pages/news-edit.jsp"/>
+    </definition>
+
+    <definition name="news-list" extends="common-template">
+        <put name="title" value="Edit news"/>
+        <put name="body" value="/pages/news-list.jsp"/>
+    </definition>
+
+    <definition name="news-view" extends="common-template">
+        <put name="title" value="News message"/>
+        <put name="body" value="/pages/news-view.jsp"/>
+    </definition>
+</tiles-definitions>

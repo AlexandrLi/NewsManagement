@@ -2,6 +2,8 @@ package com.epam.ali.testapp.model;
 
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 public class News extends BaseEntity {
     private String title;
@@ -26,6 +28,11 @@ public class News extends BaseEntity {
 
     public void setDate(DateTime date) {
         this.date = date;
+    }
+
+    public String getFormattedDate() {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/YYYY");
+        return date.toString(formatter);
     }
 
     public String getBrief() {

@@ -11,5 +11,17 @@
     </form-beans>
 
     <action-mappings>
+        <action path="/news" parameter="method" type="com.epam.ali.testapp.presentation.action.NewsAction"
+                name="newsForm">
+            <forward name="list" path="news-list"/>
+            <forward name="view" path="news-view"/>
+            <forward name="add" path="/news.do?method=list"/>
+            <forward name="delete" path="/news.do?method=list"/>
+        </action>
     </action-mappings>
+
+    <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+    <plug-in className="org.apache.struts.tiles.TilesPlugin">
+        <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml"/>
+    </plug-in>
 </struts-config>

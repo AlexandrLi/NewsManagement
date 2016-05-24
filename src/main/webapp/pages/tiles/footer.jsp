@@ -1,0 +1,1 @@
+<div align="center">Copyright &copy; EPAM 2016. All rights reserved.</div>
