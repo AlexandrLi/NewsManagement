@@ -27,11 +27,6 @@ public class NewsAction extends DispatchAction {
     }
 
     public ActionForward add(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        NewsForm newsForm = (NewsForm) form;
-        News news = new News();
-        news.setTitle(newsForm.getTitle());
-        news.setBrief(newsForm.getBrief());
-        news.setContent(newsForm.getContent());
         return mapping.findForward("add");
     }
 
@@ -45,7 +40,11 @@ public class NewsAction extends DispatchAction {
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return mapping.findForward("success");
+        NewsForm newsForm = (NewsForm) form;
+        NewsDAO newsDAO = new NewsDAO();
+        String id = request.getParameter("id");
+        newsForm.setNewsMessage(newsDAO.fetchById(Integer.parseInt(id)));
+        return mapping.findForward("edit");
     }
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {

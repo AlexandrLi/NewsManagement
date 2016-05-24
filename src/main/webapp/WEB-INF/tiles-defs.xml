@@ -23,4 +23,9 @@
         <put name="title" value="News message"/>
         <put name="body" value="/pages/news-view.jsp"/>
     </definition>
+
+    <definition name="news-add" extends="common-template">
+        <put name="title" value="Add news"/>
+        <put name="body" value="/pages/news-add.jsp"/>
+    </definition>
 </tiles-definitions>

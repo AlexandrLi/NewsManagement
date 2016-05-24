@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html" %>
 <bean:define name="newsForm" property="newsMessage" id="newsMessage"/>
-<div style="margin-left: 30px;margin-right: 30px">
+<div style="margin-left: 30px;margin-right: 30px;margin-top: 30px">
     <p>News Title: <b><bean:write name="newsMessage" property="title"/></b></p>
     <br/>
     <p>News date: <span>${newsMessage.formattedDate}</span></p>
