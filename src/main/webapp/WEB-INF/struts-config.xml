@@ -11,12 +11,14 @@
     </form-beans>
 
     <action-mappings>
+        <action path="/addPage" forward="news-add"/>
         <action path="/news" parameter="method" type="com.epam.ali.testapp.presentation.action.NewsAction"
                 name="newsForm">
             <forward name="list" path="news-list"/>
             <forward name="view" path="news-view"/>
-            <forward name="add" path="news-add"/>
+            <forward name="add" path="/news.do?method=list"/>
             <forward name="edit" path="edit-news"/>
+            <forward name="save" path="news-view"/>
             <forward name="delete" path="/news.do?method=list"/>
         </action>
     </action-mappings>

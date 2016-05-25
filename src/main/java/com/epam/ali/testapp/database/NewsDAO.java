@@ -23,8 +23,8 @@ public class NewsDAO implements INewsDAO {
     @Override
     public List<News> getList() throws DaoException {
         List<News> newsList = new ArrayList<>();
-        Connection connection = getConnection();
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM ALEXANDR_LI.NEWS")) {
+        try (Connection connection = getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM ALEXANDR_LI.NEWS")) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 News news = new News();
@@ -42,16 +42,27 @@ public class NewsDAO implements INewsDAO {
     }
 
     @Override
-    public void save() {
-
+    public void save(News newsMessage) throws DaoException {
+        try (Connection connection = getConnection();
+             PreparedStatement ps = connection.prepareStatement("INSERT INTO NEWS (NEWS_TITLE, NEWS_BRIEF, NEWS_CONTENT) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, newsMessage.getTitle());
+            ps.setString(2, newsMessage.getBrief());
+            ps.setString(3, newsMessage.getContent());
+            ps.executeUpdate();
+//            ResultSet generatedKeys = ps.getGeneratedKeys();
+//            generatedKeys.next();
+//            newsMessage.setId(generatedKeys.getInt(1));
+        } catch (SQLException e) {
+            throw new DaoException("Could not update news message", e);
+        }
     }
 
     @Override
     public void remove(Integer id) throws DaoException {
-        Connection connection = getConnection();
-        try (PreparedStatement ps = connection.prepareStatement("DELETE FROM ALEXANDR_LI.NEWS WHERE NEWS_ID=?")) {
+        try (Connection connection = getConnection();
+             PreparedStatement ps = connection.prepareStatement("DELETE FROM ALEXANDR_LI.NEWS WHERE NEWS_ID=?")) {
             ps.setInt(1, id);
-            ps.execute();
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException("Could not remove news message from db", e);
         }
@@ -61,8 +72,9 @@ public class NewsDAO implements INewsDAO {
     @Override
     public News fetchById(Integer id) throws DaoException {
         News newsMessage = new News();
-        Connection connection = getConnection();
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM ALEXANDR_LI.NEWS WHERE NEWS_ID=" + id)) {
+        try (Connection connection = getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM ALEXANDR_LI.NEWS WHERE NEWS_ID=?")) {
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 newsMessage.setId(rs.getInt("news_id"));
@@ -74,6 +86,21 @@ public class NewsDAO implements INewsDAO {
             return newsMessage;
         } catch (SQLException e) {
             throw new DaoException("Could not get news message from db", e);
+        }
+    }
+
+    @Override
+    public void update(News newsMessage) throws DaoException {
+        try (Connection connection = getConnection();
+             PreparedStatement ps = connection.prepareStatement("UPDATE ALEXANDR_LI.NEWS SET NEWS_TITLE=?,NEWS_DATE=?,NEWS_BRIEF=?,NEWS_CONTENT=? WHERE NEWS_ID=?")) {
+            ps.setString(1, newsMessage.getTitle());
+            ps.setDate(2, new Date(newsMessage.getDate().getMillis()));
+            ps.setString(3, newsMessage.getBrief());
+            ps.setString(4, newsMessage.getContent());
+            ps.setInt(5, newsMessage.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Could not update news message", e);
         }
     }
 }

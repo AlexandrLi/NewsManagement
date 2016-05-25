@@ -7,10 +7,12 @@ import java.util.List;
 public interface INewsDAO {
     List<News> getList() throws DaoException;
 
-    void save();
+    void save(News newsMessage) throws DaoException;
 
     void remove(Integer id) throws DaoException;
 
     News fetchById(Integer id) throws DaoException;
+
+    void update(News newsMessage) throws DaoException;
 
 }

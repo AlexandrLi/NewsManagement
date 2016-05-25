@@ -7,34 +7,41 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class NewsAction extends DispatchAction {
 
-    public ActionForward setNewsDao(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        NewsForm newsForm = (NewsForm) form;
-        return super.execute(mapping, form, request, response);
-    }
-
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         NewsForm newsForm = (NewsForm) form;
         NewsDAO newsDAO = new NewsDAO();
         newsForm.setNewsList(newsDAO.getList());
-        System.out.println();
+        return mapping.findForward("list");
+    }
+
+    @Override
+    protected ActionForward cancelled(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return mapping.findForward("list");
     }
 
     public ActionForward add(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        NewsForm newsForm = (NewsForm) form;
+        News newsMessage = new News();
+        NewsDAO newsDAO = new NewsDAO();
+        newsMessage.setTitle(newsForm.getTitle());
+        newsMessage.setBrief(newsForm.getBrief());
+        newsMessage.setContent(newsForm.getContent());
+        newsDAO.save(newsMessage);
         return mapping.findForward("add");
     }
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         NewsForm newsForm = (NewsForm) form;
-        String id = request.getParameter("id");
         NewsDAO newsDAO = new NewsDAO();
-        News newsMessage = newsDAO.fetchById(Integer.parseInt(id));
+        News newsMessage = newsDAO.fetchById(Integer.valueOf(newsForm.getId()));
         newsForm.setNewsMessage(newsMessage);
         return mapping.findForward("view");
     }
@@ -42,8 +49,7 @@ public class NewsAction extends DispatchAction {
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         NewsForm newsForm = (NewsForm) form;
         NewsDAO newsDAO = new NewsDAO();
-        String id = request.getParameter("id");
-        newsForm.setNewsMessage(newsDAO.fetchById(Integer.parseInt(id)));
+        newsForm.setNewsMessage(newsDAO.fetchById(Integer.valueOf(newsForm.getId())));
         return mapping.findForward("edit");
     }
 
@@ -55,18 +61,23 @@ public class NewsAction extends DispatchAction {
             for (int i = 0; i < deletedList.length; i++) {
                 newsDAO.remove(Integer.parseInt(deletedList[i]));
             }
+            newsForm.setDeleted(null);
         } else {
             newsDAO.remove(newsForm.getNewsMessage().getId());
         }
         return mapping.findForward("delete");
     }
 
-    public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return mapping.findForward("success");
-    }
-
     public ActionForward save(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return mapping.findForward("success");
+        NewsForm newsForm = (NewsForm) form;
+        NewsDAO newsDAO = new NewsDAO();
+        News newsMessage = newsForm.getNewsMessage();
+        newsMessage.setTitle(newsForm.getTitle());
+        newsMessage.setDate(DateTime.parse(newsForm.getDate(), DateTimeFormat.forPattern("dd/MM/YYYY")));
+        newsMessage.setBrief(newsForm.getBrief());
+        newsMessage.setContent(newsForm.getContent());
+        newsDAO.update(newsMessage);
+        return mapping.findForward("save");
     }
 
 }

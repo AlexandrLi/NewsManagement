@@ -16,6 +16,7 @@ public class NewsForm extends ActionForm {
     private String brief;
     private String content;
     private String[] deleted;
+    private List<News> newsList;
 
     public String[] getDeleted() {
         return deleted;
@@ -24,8 +25,6 @@ public class NewsForm extends ActionForm {
     public void setDeleted(String[] deleted) {
         this.deleted = deleted;
     }
-
-    private List<News> newsList;
 
     public News getNewsMessage() {
         return newsMessage;
