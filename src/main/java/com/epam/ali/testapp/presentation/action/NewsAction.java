@@ -15,19 +15,24 @@ import javax.servlet.http.HttpServletResponse;
 
 public class NewsAction extends DispatchAction {
 
-    public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public static final String LIST = "list";
+
+    public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
         NewsForm newsForm = (NewsForm) form;
         NewsDAO newsDAO = new NewsDAO();
         newsForm.setNewsList(newsDAO.getList());
-        return mapping.findForward("list");
+        return mapping.findForward(LIST);
     }
 
     @Override
-    protected ActionForward cancelled(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return mapping.findForward("list");
+    protected ActionForward cancelled(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        return mapping.findForward(LIST);
     }
 
-    public ActionForward add(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward add(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
         NewsForm newsForm = (NewsForm) form;
         News newsMessage = new News();
         NewsDAO newsDAO = new NewsDAO();
@@ -38,7 +43,8 @@ public class NewsAction extends DispatchAction {
         return mapping.findForward("add");
     }
 
-    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
         NewsForm newsForm = (NewsForm) form;
         NewsDAO newsDAO = new NewsDAO();
         News newsMessage = newsDAO.fetchById(Integer.valueOf(newsForm.getId()));
@@ -46,14 +52,16 @@ public class NewsAction extends DispatchAction {
         return mapping.findForward("view");
     }
 
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
         NewsForm newsForm = (NewsForm) form;
         NewsDAO newsDAO = new NewsDAO();
         newsForm.setNewsMessage(newsDAO.fetchById(Integer.valueOf(newsForm.getId())));
         return mapping.findForward("edit");
     }
 
-    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
         NewsForm newsForm = (NewsForm) form;
         NewsDAO newsDAO = new NewsDAO();
         String[] deletedList = newsForm.getDeleted();
@@ -68,7 +76,8 @@ public class NewsAction extends DispatchAction {
         return mapping.findForward("delete");
     }
 
-    public ActionForward save(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward save(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
         NewsForm newsForm = (NewsForm) form;
         NewsDAO newsDAO = new NewsDAO();
         News newsMessage = newsForm.getNewsMessage();

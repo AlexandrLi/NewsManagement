@@ -12,18 +12,22 @@
 
     <action-mappings>
         <action path="/addPage" forward="news-add"/>
+        <action path="/locale" parameter="lang" type="com.epam.ali.testapp.presentation.action.SelectLocaleAction">
+            <forward name="success" path="/news.do?method=list"/>
+        </action>
         <action path="/news" parameter="method" type="com.epam.ali.testapp.presentation.action.NewsAction"
                 name="newsForm">
             <forward name="list" path="news-list"/>
             <forward name="view" path="news-view"/>
-            <forward name="add" path="/news.do?method=list"/>
+            <forward name="add" path="/news.do?method=list" redirect="true"/>
             <forward name="edit" path="edit-news"/>
-            <forward name="save" path="news-view"/>
+            <forward name="save" path="news-view" redirect="true"/>
             <forward name="delete" path="/news.do?method=list"/>
         </action>
     </action-mappings>
 
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+    <message-resources parameter="messages"/>
     <plug-in className="org.apache.struts.tiles.TilesPlugin">
         <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml"/>
     </plug-in>

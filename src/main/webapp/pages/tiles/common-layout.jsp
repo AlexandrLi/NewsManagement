@@ -3,8 +3,7 @@
 
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title><tiles:getAsString name="title" ignore="true"/></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 <table border="1" cellpadding="2" cellspacing="2" align="center" width="1200px">

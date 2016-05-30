@@ -1,1 +1,2 @@
-<div align="center">Copyright &copy; EPAM 2016. All rights reserved.</div>
+<%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean" %>
+<div align="center"><bean:message key="label.footer.copyright"/></div>

@@ -49,9 +49,6 @@ public class NewsDAO implements INewsDAO {
             ps.setString(2, newsMessage.getBrief());
             ps.setString(3, newsMessage.getContent());
             ps.executeUpdate();
-//            ResultSet generatedKeys = ps.getGeneratedKeys();
-//            generatedKeys.next();
-//            newsMessage.setId(generatedKeys.getInt(1));
         } catch (SQLException e) {
             throw new DaoException("Could not update news message", e);
         }

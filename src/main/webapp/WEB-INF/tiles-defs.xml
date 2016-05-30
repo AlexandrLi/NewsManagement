@@ -10,22 +10,18 @@
     </definition>
 
     <definition name="edit-news" extends="common-template">
-        <put name="title" value="Add news"/>
         <put name="body" value="/pages/news-edit.jsp"/>
     </definition>
 
     <definition name="news-list" extends="common-template">
-        <put name="title" value="Edit news"/>
         <put name="body" value="/pages/news-list.jsp"/>
     </definition>
 
     <definition name="news-view" extends="common-template">
-        <put name="title" value="News message"/>
         <put name="body" value="/pages/news-view.jsp"/>
     </definition>
 
     <definition name="news-add" extends="common-template">
-        <put name="title" value="Add news"/>
         <put name="body" value="/pages/news-add.jsp"/>
     </definition>
 </tiles-definitions>
